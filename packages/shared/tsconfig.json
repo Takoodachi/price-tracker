@@ -1,0 +1,8 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    // Runs in both Node and the browser; DOM provides URL/Intl typings for both.
+    "lib": ["ES2023", "DOM"]
+  },
+  "include": ["src"]
+}

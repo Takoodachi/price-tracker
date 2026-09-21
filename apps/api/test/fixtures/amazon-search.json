@@ -1,0 +1,62 @@
+{
+  "job_id": "fixture",
+  "status": "finished",
+  "results": [
+    {
+      "success": true,
+      "content": {
+        "offers_count": 4,
+        "offers": [
+          {
+            "name": "PlayStation®5 Digital Edition – 825GB",
+            "asin": "B0FRGMYJMG",
+            "link": "https://www.amazon.com/PlayStation%C2%AE5-Digital-825GB-PlayStation-5/dp/B0FRGMYJMG",
+            "image": "https://m.media-amazon.com/images/I/516yiK6U+FL._AC_UY654_FMwebp_QL65_.jpg",
+            "review_rating": 0,
+            "review_count": 872,
+            "is_amazon_choice": true,
+            "is_bestseller": false,
+            "is_prime": false,
+            "price": 0
+          },
+          {
+            "name": "PlayStation®5 console (slim) (Renewed)",
+            "asin": "B0CP4F9J4W",
+            "link": "https://www.amazon.com/PlayStation%C2%AE5-console-slim-Renewed-PlayStation-5/dp/B0CP4F9J4W",
+            "image": "https://m.media-amazon.com/images/I/51nHxiiZo+L._AC_UY654_FMwebp_QL65_.jpg",
+            "review_rating": 0,
+            "review_count": 516,
+            "is_amazon_choice": false,
+            "is_bestseller": false,
+            "is_prime": false,
+            "price": 579.99
+          },
+          {
+            "name": "SonyPlayStation 5 PS5 Disc Version Gaming Console, 4K Blu-ray Player, 16GB GDDR6 Memory, Ultra-High Speed 825GB SSD, WiFi 6, Bluetooth 5.1, 120Hz 8K Output",
+            "asin": "B09W14BJF1",
+            "link": "https://www.amazon.com/Sony-Playstation-Version-Ultra-High-Bluetooth/dp/B09W14BJF1",
+            "image": "https://m.media-amazon.com/images/I/61BF3G-d1SS._AC_UY654_FMwebp_QL65_.jpg",
+            "review_rating": 0,
+            "review_count": 35,
+            "is_amazon_choice": false,
+            "is_bestseller": false,
+            "is_prime": false,
+            "price": 729.99
+          },
+          {
+            "name": "PlayStation®5 Digital Edition (slim)",
+            "asin": "B0CL5KNB9M",
+            "link": "https://www.amazon.com/PlayStation%C2%AE5-Digital-slim-PlayStation-5/dp/B0CL5KNB9M",
+            "image": "https://m.media-amazon.com/images/I/51fM0CKG+HL._AC_UY654_FMwebp_QL65_.jpg",
+            "review_rating": 0,
+            "review_count": 5,
+            "is_amazon_choice": false,
+            "is_bestseller": false,
+            "is_prime": false,
+            "price": 589
+          }
+        ]
+      }
+    }
+  ]
+}

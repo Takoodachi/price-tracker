@@ -1,0 +1,74 @@
+{
+  "job_id": "fixture",
+  "status": "finished",
+  "results": [
+    {
+      "success": true,
+      "content": {
+        "asin": "B0CL5KNB9M",
+        "name": "PlayStation®5 Digital Edition (slim)",
+        "url": "https://www.amazon.com/dp/B0CL5KNB9M",
+        "currency": "USD",
+        "buybox_price": null,
+        "is_available": false,
+        "offers": [
+          {
+            "price": 589.99,
+            "condition": "Used - Very Good",
+            "shop_type": "marketplace-shop"
+          },
+          {
+            "price": 589.98,
+            "condition": "Refurbished - Refurbished",
+            "shop_type": "marketplace-shop"
+          },
+          {
+            "price": 589,
+            "condition": "Used - Very Good",
+            "shop_type": "marketplace-shop"
+          },
+          {
+            "price": 598.99,
+            "condition": "Used - Very Good",
+            "shop_type": "marketplace-shop"
+          },
+          {
+            "price": 599.99,
+            "condition": "Used - Very Good",
+            "shop_type": "marketplace-shop"
+          },
+          {
+            "price": 599.99,
+            "condition": "Used - Like New",
+            "shop_type": "marketplace-shop"
+          },
+          {
+            "price": 649,
+            "condition": "Used - Like New",
+            "shop_type": "marketplace-shop"
+          },
+          {
+            "price": 649.99,
+            "condition": "Used - Like New",
+            "shop_type": "marketplace-shop"
+          },
+          {
+            "price": 649.99,
+            "condition": "Used - Good",
+            "shop_type": "marketplace-shop"
+          },
+          {
+            "price": 599.95,
+            "condition": "New",
+            "shop_type": "marketplace-shop"
+          },
+          {
+            "price": 696.15,
+            "condition": "Used - Like New",
+            "shop_type": "standalone-shop"
+          }
+        ]
+      }
+    }
+  ]
+}

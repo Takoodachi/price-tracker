@@ -1,0 +1,79 @@
+{
+  "job_id": "fixture",
+  "status": "finished",
+  "results": [
+    {
+      "success": true,
+      "content": {
+        "asin": "",
+        "name": "Sony WH-1000XM5 Premium Noise Cancelling Wireless Headphones, Silver",
+        "url": "https://www.amazon.com/dp/",
+        "currency": "USD",
+        "buybox_price": 298,
+        "is_available": true,
+        "offers": [
+          {
+            "price": 298,
+            "condition": "New",
+            "shop_type": "marketplace-shop"
+          },
+          {
+            "price": 174.99,
+            "condition": "Used - Acceptable",
+            "shop_type": "marketplace-shop"
+          },
+          {
+            "price": 178.99,
+            "condition": "Used - Very Good",
+            "shop_type": "marketplace-shop"
+          },
+          {
+            "price": 182.26,
+            "condition": "Used - Good",
+            "shop_type": "standalone-shop"
+          },
+          {
+            "price": 195,
+            "condition": "Refurbished - Refurbished",
+            "shop_type": "marketplace-shop"
+          },
+          {
+            "price": 199.99,
+            "condition": "Used - Very Good",
+            "shop_type": "marketplace-shop"
+          },
+          {
+            "price": 199.99,
+            "condition": "Used - Like New",
+            "shop_type": "marketplace-shop"
+          },
+          {
+            "price": 197.98,
+            "condition": "Used - Like New",
+            "shop_type": "marketplace-shop"
+          },
+          {
+            "price": 205.95,
+            "condition": "Used - Like New",
+            "shop_type": "marketplace-shop"
+          },
+          {
+            "price": 209.99,
+            "condition": "Used - Very Good",
+            "shop_type": "marketplace-shop"
+          },
+          {
+            "price": 219.98,
+            "condition": "Used - Like New",
+            "shop_type": "marketplace-shop"
+          },
+          {
+            "price": 298,
+            "condition": "New",
+            "shop_type": "standalone-shop"
+          }
+        ]
+      }
+    }
+  ]
+}

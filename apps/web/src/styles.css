@@ -1,0 +1,169 @@
+@import "tailwindcss";
+
+/*
+ * Design tokens. The look follows nomu.store: a warm off-white canvas with a
+ * faint grid, near-black ink, one coral accent, Inter everywhere, pill shapes,
+ * big tight headlines and lots of air. Every color is a variable so dark mode
+ * is a separate, deliberately chosen set of steps (not an automatic inversion).
+ */
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+:root {
+  --pt-canvas: #fff9f6;
+  --pt-surface: #ffffff;
+  --pt-surface-2: #fbf4ef;
+  --pt-tile: #f6f1ed;
+  --pt-ink: #0f151d;
+  --pt-ink-2: #3f4750;
+  --pt-muted: #6b7178;
+  --pt-line: #ede5df;
+  --pt-line-strong: #ddd2ca;
+  --pt-accent: #ff7448;
+  --pt-accent-hover: #f5653a;
+  /* Coral for text: #FF7448 on white is only 2.7:1, so text uses a deeper step. */
+  --pt-accent-ink: #c94a22;
+  --pt-accent-display: #e8603a;
+  --pt-accent-soft: #ffe9e0;
+  --pt-on-accent: #0f151d;
+  --pt-positive: #1e7f55;
+  --pt-positive-soft: #e3f4ec;
+  --pt-negative: #b83a3a;
+  --pt-negative-soft: #fbe7e7;
+  --pt-chart: #e8603a;
+  --pt-grid: rgb(15 21 29 / 0.045);
+  --pt-shadow: 0 8px 24px -8px rgb(15 21 29 / 0.22);
+  --pt-shadow-lift: 0 18px 40px -18px rgb(15 21 29 / 0.28);
+  color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+  --pt-canvas: #0f151d;
+  --pt-surface: #161d27;
+  --pt-surface-2: #1c2430;
+  --pt-tile: #ece7e3;
+  --pt-ink: #f3eeea;
+  --pt-ink-2: #c3c8ce;
+  --pt-muted: #9aa1a9;
+  --pt-line: #252e3a;
+  --pt-line-strong: #334052;
+  --pt-accent: #ff7448;
+  --pt-accent-hover: #ff8660;
+  --pt-accent-ink: #ff8a63;
+  --pt-accent-display: #ff7448;
+  --pt-accent-soft: #3a241f;
+  --pt-on-accent: #0f151d;
+  --pt-positive: #4cc38a;
+  --pt-positive-soft: #173528;
+  --pt-negative: #f07171;
+  --pt-negative-soft: #3a1e22;
+  --pt-chart: #e8603a;
+  --pt-grid: rgb(255 255 255 / 0.035);
+  --pt-shadow: 0 8px 24px -8px rgb(0 0 0 / 0.6);
+  --pt-shadow-lift: 0 18px 40px -18px rgb(0 0 0 / 0.7);
+  color-scheme: dark;
+}
+
+@theme inline {
+  --font-sans: "Inter Variable", "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --color-canvas: var(--pt-canvas);
+  --color-surface: var(--pt-surface);
+  --color-surface-2: var(--pt-surface-2);
+  --color-tile: var(--pt-tile);
+  --color-ink: var(--pt-ink);
+  --color-ink-2: var(--pt-ink-2);
+  --color-muted: var(--pt-muted);
+  --color-line: var(--pt-line);
+  --color-line-strong: var(--pt-line-strong);
+  --color-accent: var(--pt-accent);
+  --color-accent-hover: var(--pt-accent-hover);
+  --color-accent-ink: var(--pt-accent-ink);
+  --color-accent-display: var(--pt-accent-display);
+  --color-accent-soft: var(--pt-accent-soft);
+  --color-on-accent: var(--pt-on-accent);
+  --color-positive: var(--pt-positive);
+  --color-positive-soft: var(--pt-positive-soft);
+  --color-negative: var(--pt-negative);
+  --color-negative-soft: var(--pt-negative-soft);
+  --color-chart: var(--pt-chart);
+  --shadow-soft: var(--pt-shadow);
+  --shadow-lift: var(--pt-shadow-lift);
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    margin: 0;
+    background-color: var(--pt-canvas);
+    /* The faint grid nomu.store sits on. */
+    background-image:
+      linear-gradient(var(--pt-grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--pt-grid) 1px, transparent 1px);
+    background-size: 64px 64px;
+    background-position: center top;
+    color: var(--pt-ink);
+    font-family: var(--font-sans);
+    font-feature-settings: "cv11", "ss01";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    min-height: 100dvh;
+    overflow-x: hidden;
+  }
+  ::selection {
+    background: var(--pt-accent-soft);
+    color: var(--pt-ink);
+  }
+  :focus-visible {
+    outline: 2px solid var(--pt-accent);
+    outline-offset: 2px;
+  }
+  input::-webkit-search-cancel-button {
+    display: none;
+  }
+}
+
+@utility display-tight {
+  letter-spacing: -0.05em;
+  line-height: 1.02;
+}
+
+@utility skeleton {
+  background: linear-gradient(90deg, var(--pt-surface-2) 0%, var(--pt-line) 50%, var(--pt-surface-2) 100%);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  from {
+    background-position: 100% 0;
+  }
+  to {
+    background-position: -100% 0;
+  }
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@utility animate-rise {
+  animation: rise 0.45s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

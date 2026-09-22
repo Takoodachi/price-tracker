@@ -55,6 +55,8 @@ export function createApp() {
         directives: {
           // Product photos come from store CDNs (Amazon, Best Buy, Google...).
           'img-src': ["'self'", 'data:', 'https:'],
+          // Only force HTTPS subresources when the site is actually served over HTTPS.
+          'upgrade-insecure-requests': config.COOKIE_SECURE ? [] : null,
         },
       },
     }),

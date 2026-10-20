@@ -1,0 +1,40 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:18-alpine
+        env:
+          POSTGRES_USER: pricetracker
+          POSTGRES_PASSWORD: pricetracker
+          POSTGRES_DB: pricetracker_test
+        ports: ["5433:5432"]
+        options: >-
+          --health-cmd "pg_isready -U pricetracker"
+          --health-interval 5s --health-timeout 5s --health-retries 10
+      redis:
+        image: redis:8-alpine
+        ports: ["6379:6379"]
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 5s --health-timeout 5s --health-retries 10
+
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run typecheck
+      # Tests use only the built-in demo source, so no API keys are needed.
+      - run: npm test
+      - run: npm run build

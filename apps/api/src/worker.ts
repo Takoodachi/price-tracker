@@ -39,7 +39,15 @@ async function sweep(): Promise<{ queued: number; pruned: number }> {
   return { queued: rows.length, pruned: pruned.rowCount ?? 0 };
 }
 
-export async function startWorker(): Promise<() => Promise<void>> {
+let running: Promise<() => Promise<void>> | null = null;
+
+/** Starts the worker once per process; repeat calls return the same handle. */
+export function startWorker(): Promise<() => Promise<void>> {
+  running ??= start();
+  return running;
+}
+
+async function start(): Promise<() => Promise<void>> {
   await connectCache();
   const worker = new Worker<RefreshJobData, unknown, JobName>(
     QUEUE_NAME,

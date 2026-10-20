@@ -1,0 +1,61 @@
+# Render Blueprint: deploys the whole app as one service.
+#
+# The API serves the React app and runs the price worker in the same process,
+# so everything lives on one origin (no CORS, cookies just work) and fits in a
+# single free instance.
+#
+# In the Render dashboard: New -> Blueprint -> pick this repo. Then set the
+# secret values marked `sync: false` (see README "Deploying").
+
+services:
+  - type: web
+    name: price-tracker
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    plan: free
+    region: oregon
+    healthCheckPath: /api/health
+    autoDeploy: true
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 4000
+      - key: SERVE_WEB
+        value: "true"
+      - key: RUN_WORKER
+        value: "true"
+      - key: MIGRATE_ON_START
+        value: "true"
+      # Render terminates TLS in front of the app: trust its proxy so rate
+      # limiting sees real client IPs, and mark the session cookie Secure.
+      - key: TRUST_PROXY
+        value: "true"
+      - key: COOKIE_SECURE
+        value: "true"
+      # 0 = don't pre-fetch store prices during search. Each search then costs
+      # one Google Shopping request instead of three, which matters on the free
+      # plan's 100 requests/month. Store prices load when a product is opened.
+      - key: SHOPPING_OFFERS_PREFETCH
+        value: "0"
+      - key: JWT_SECRET
+        generateValue: true
+      # Paste these in the dashboard (Environment tab) — never commit them.
+      - key: DATABASE_URL
+        sync: false
+      - key: RAPIDAPI_KEY
+        sync: false
+      - key: REDIS_URL
+        fromService:
+          name: price-tracker-cache
+          type: keyvalue
+          property: connectionString
+
+  - type: keyvalue
+    name: price-tracker-cache
+    plan: free
+    region: oregon
+    # Free Key Value is in-memory only. That's fine here: the cache is
+    # disposable and queued refresh jobs are recreated by the next sweep.
+    maxmemoryPolicy: noeviction
+    ipAllowList: []

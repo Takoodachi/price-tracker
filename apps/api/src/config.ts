@@ -36,6 +36,10 @@ const schema = z.object({
   COOKIE_SECURE: bool(isProd),
   TRUST_PROXY: bool(false),
   SERVE_WEB: bool(false),
+  // Run the price-refresh worker inside the API process. Useful on hosts where
+  // a second always-on process costs money; in a bigger deployment run
+  // `node dist/worker.js` separately instead.
+  RUN_WORKER: bool(false),
   MIGRATE_ON_START: bool(!isProd),
   LOG_LEVEL: z.enum(['fatal', 'error', 'warn', 'info', 'debug', 'trace', 'silent']).default('info'),
 

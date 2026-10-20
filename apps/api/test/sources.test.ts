@@ -125,6 +125,28 @@ describe('google shopping source', () => {
     expect(offers[0]!.externalId).toBe('gpcid:9|walmart');
   });
 
+  it('ranks clusters headlined by an official retailer first, keeping Google order otherwise', async () => {
+    const product = (id: number, store: string) => ({
+      product_id: `catalogid:${id},gpcid:${id}`,
+      product_title: `Product ${id}`,
+      price: '$100.00',
+      store_name: store,
+    });
+    mockFetch(
+      JSON.stringify({
+        status: 'OK',
+        data: { products: [product(1, 'Mercari'), product(2, 'Best Buy'), product(3, 'eBay - seller'), product(4, 'Walmart')] },
+      }),
+    );
+    const { clusters } = await shopping.search('x', signal);
+    expect(clusters.map((c) => [c.title, c.teaser?.retailerName ?? null])).toEqual([
+      ['Product 2', 'Best Buy'],
+      ['Product 4', 'Walmart'],
+      ['Product 1', null],
+      ['Product 3', null],
+    ]);
+  });
+
   it('explains how to fix a missing RapidAPI subscription', async () => {
     mockFetch({ status: 403, body: '{"message":"You are not subscribed to this API."}' });
     await expect(shopping.search('ps5', signal)).rejects.toThrow(/subscribe to the free plan/);

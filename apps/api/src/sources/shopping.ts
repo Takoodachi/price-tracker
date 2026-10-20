@@ -141,6 +141,9 @@ export const shopping: Source = {
         teaser: retailer && price ? { retailerName: retailer.name, priceCents: price } : null,
       });
     }
+    // Clusters sold by an official retailer first; Google's own order is kept
+    // within each group (sort is stable).
+    clusters.sort((a, b) => Number(b.teaser !== null) - Number(a.teaser !== null));
     return { offers: [], clusters };
   },
 

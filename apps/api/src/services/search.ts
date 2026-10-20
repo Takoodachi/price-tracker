@@ -10,7 +10,10 @@ import { isRefreshing, needsRefresh, refreshProduct } from './refresh';
 type Outcome = { ok: true; result: SearchResult } | { ok: false; message: string };
 
 const ERROR_CACHE_SECONDS = 60;
-const MAX_PRODUCTS = 24;
+// Generous, because the filter below drops a lot: for some queries Google
+// returns mostly resale-only clusters, and a low cap would crowd out the real
+// retailer listings that come after them.
+const MAX_PRODUCTS = 40;
 /** Products without a Google Shopping cluster whose Amazon/Best Buy prices get confirmed right away. */
 const DIRECT_LOOKUP_PREFETCH = 6;
 
@@ -118,7 +121,13 @@ export async function searchProducts(rawQuery: string, userId: number | null): P
     await Promise.race([Promise.allSettled(refreshing), sleep(remaining)]);
   }
 
-  const products = await loadSummaries(productIds, userId, teasers);
+  // Hide products we can't say anything useful about: no offer from an official
+  // retailer, and no official headline price either. Google clusters a lot of
+  // resale listings whose sellers are all rejected, and those render as empty
+  // cards that cost a request to open and show nothing.
+  const products = (await loadSummaries(productIds, userId, teasers)).filter(
+    (p) => p.offers.length > 0 || p.teaser !== null,
+  );
   const stillRefreshing = watched.some(isRefreshing);
 
   const states: SourceState[] = sources.map((source) => {

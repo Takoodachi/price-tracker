@@ -53,13 +53,19 @@ export const demo: Source = {
     const clusters: ProductCluster[] = VARIANTS.map((variant) => {
       const title = variant ? `${base} ${variant}` : base;
       const ref = `demo:${title.toLowerCase()}`;
-      return { key: ref, ref, title, imageUrl: null, teaser: null };
+      // Stands in for the single headline price a real aggregator shows.
+      return { key: ref, ref, title, imageUrl: null, teaser: { retailerName: 'Demo store', priceCents: basePrice(ref) } };
     });
+    // Like Google's resale-only clusters: no official seller anywhere, so the
+    // search must hide it (the API tests rely on this).
+    const resale = `demo:${base.toLowerCase()} resale lot`;
+    clusters.push({ key: resale, ref: resale, title: `${base} Resale Lot`, imageUrl: null, teaser: null });
     return { offers: [], clusters };
   },
 
   async offersFor(ref, signal) {
     await sleep(400, signal);
+    if (ref.endsWith(' resale lot')) return [];
     const title = titleCase(ref.replace(/^demo:/, ''));
     const base = basePrice(ref);
     const day = Math.floor(Date.now() / 86_400_000);

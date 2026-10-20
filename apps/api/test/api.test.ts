@@ -59,6 +59,7 @@ describe.skipIf(!process.env.PT_TEST_DB_READY)('API', async () => {
 
   it('searches, compares stores, and picks the lowest eligible price', async () => {
     const result = await searchUntilDone('Acme Blender');
+    // The demo's resale-only cluster has no official seller, so it is hidden.
     expect(result.products.map((p) => p.title)).toEqual([
       'Acme Blender',
       'Acme Blender Pro',

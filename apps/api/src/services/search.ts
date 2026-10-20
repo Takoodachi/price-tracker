@@ -128,8 +128,11 @@ export async function searchProducts(rawQuery: string, userId: number | null): P
     if (!outcome) return { ...base, status: 'pending' };
     return outcome.ok ? { ...base, status: 'ok' } : { ...base, status: 'error', message: outcome.message };
   });
-  // The demo source is noise for real users; only list it when it's on.
-  const visibleStates = states.filter((s) => s.source !== 'demo' || s.status !== 'disabled');
+  // Sources you haven't set up are only worth showing when nothing is working;
+  // otherwise they're permanent noise (e.g. Best Buy, whose prices arrive via
+  // Google Shopping anyway).
+  const anyActive = states.some((s) => s.status !== 'disabled');
+  const visibleStates = anyActive ? states.filter((s) => s.status !== 'disabled') : states;
 
   return {
     query: rawQuery.trim(),

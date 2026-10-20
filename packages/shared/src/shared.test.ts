@@ -62,6 +62,10 @@ describe('product matching', () => {
     expect(same('DualSense Wireless Controller for PS5 - White', 'PlayStation 5 Console - White')).toBe(false);
     expect(same('Xbox Series X', 'Xbox Series S')).toBe(false);
     expect(same('PlayStation 5', 'PlayStation 5 Astro Bot Game Standard')).toBe(false);
+    // Games and accessories repeat the console's name; they are not the console.
+    expect(same('Sony PlayStation 5 Console', 'NBA 2K27 - PlayStation 5')).toBe(false);
+    expect(same('Sony PlayStation 5 Console', 'Mario Kart World (Nintendo Switch 2)')).toBe(false);
+    expect(same('Nintendo Switch 2', 'Donkey Kong Bananza - Nintendo Switch 2')).toBe(false);
   });
 
   it('uses model numbers and GTINs when present', () => {

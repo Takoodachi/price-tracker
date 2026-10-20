@@ -44,11 +44,12 @@ const schema = z.object({
   BESTBUY_API_KEY: optionalString,
   OPENWEBNINJA_API_KEY: optionalString,
   SHOPPING_RAPIDAPI_HOST: z.string().default('real-time-product-search.p.rapidapi.com'),
-  SHOPPING_SEARCH_PATH: z.string().default('/search-v2'),
-  SHOPPING_OFFERS_PATH: z.string().default('/product-offers-v2'),
-  SHOPPING_STORES: z
-    .string()
-    .default('Amazon,Best Buy,Walmart,Target,Newegg,Costco,B&H Photo-Video-Audio,GameStop,Micro Center'),
+  SHOPPING_SEARCH_PATH: z.string().default('/search'),
+  SHOPPING_OFFERS_PATH: z.string().default('/product-offers'),
+  // Empty by default: filtering Google's search by store name narrows it to odd
+  // bundles and marketplace listings instead of the main product. Offers are
+  // filtered to official retailers when they are fetched, which is the right place.
+  SHOPPING_STORES: z.string().default(''),
   DEMO_MODE: bool(false),
 
   SHOPPING_OFFERS_PREFETCH: z.coerce.number().int().min(0).max(10).default(3),

@@ -169,6 +169,13 @@ export function similarity(a: Fingerprint, b: Fingerprint): number {
   const smaller = Math.min(a.tokens.size, b.tokens.size);
   if (smaller < 2) return 0;
   const union = a.tokens.size + b.tokens.size - shared;
+
+  // A very short title ("Sony PlayStation 5 Console" -> playstation, 5) is weak
+  // evidence: almost any accessory or game for that product contains those same
+  // words. Demand that the longer title adds at most one meaningful word,
+  // otherwise "NBA 2K27 - PlayStation 5" passes as the console itself.
+  if (smaller < 3 && (shared < smaller || union > smaller + 1)) return 0;
+
   const jaccard = shared / union;
   const containment = shared / smaller;
   // Both must be high: containment alone would let "PlayStation 5" match

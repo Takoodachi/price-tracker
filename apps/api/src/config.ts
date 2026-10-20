@@ -29,7 +29,9 @@ const isProd = process.env.NODE_ENV === 'production';
 const schema = z.object({
   NODE_ENV: z.enum(['development', 'production', 'test']).default('development'),
   PORT: z.coerce.number().int().positive().default(4000),
-  DATABASE_URL: z.string().min(1, 'DATABASE_URL is required'),
+  DATABASE_URL: z
+    .string()
+    .refine(URL.canParse, 'must be a connection URL like postgresql://user:pass@host:5432/dbname (no psql prefix or quotes)'),
   REDIS_URL: z.string().default('redis://localhost:6379'),
   JWT_SECRET: z.string().min(32, 'JWT_SECRET must be at least 32 characters (run `npm run setup`)'),
   CORS_ORIGINS: optionalString,

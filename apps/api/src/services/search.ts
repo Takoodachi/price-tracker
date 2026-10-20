@@ -111,6 +111,9 @@ export async function searchProducts(rawQuery: string, userId: number | null): P
   for (const id of productIds) {
     const product = await getProductRow(id);
     if (!product) continue;
+    // Spend paid Google requests only where an official retailer already
+    // appears; a resale-only cluster's offers are all rejected anyway.
+    if (product.shopping_ref && !teasers.has(id)) continue;
     const budgetLeft = product.shopping_ref ? shoppingBudget-- > 0 : lookupBudget-- > 0;
     if (!budgetLeft) continue;
     watched.push(id);
@@ -121,12 +124,12 @@ export async function searchProducts(rawQuery: string, userId: number | null): P
     await Promise.race([Promise.allSettled(refreshing), sleep(remaining)]);
   }
 
-  // Hide products we can't say anything useful about: no offer from an official
-  // retailer, and no official headline price either. Google clusters a lot of
-  // resale listings whose sellers are all rejected, and those render as empty
-  // cards that cost a request to open and show nothing.
+  // Show only products with something to buy: a best price (new, in stock,
+  // official retailer) or an official headline price to compare. That hides
+  // Google's resale-only clusters and renewed/unpriced listings, which would
+  // render as cards that say "not available".
   const products = (await loadSummaries(productIds, userId, teasers)).filter(
-    (p) => p.offers.length > 0 || p.teaser !== null,
+    (p) => p.best !== null || p.teaser !== null,
   );
   const stillRefreshing = watched.some(isRefreshing);
 

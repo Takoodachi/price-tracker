@@ -56,10 +56,11 @@ export const demo: Source = {
       // Stands in for the single headline price a real aggregator shows.
       return { key: ref, ref, title, imageUrl: null, teaser: { retailerName: 'Demo store', priceCents: basePrice(ref) } };
     });
-    // Like Google's resale-only clusters: no official seller anywhere, so the
-    // search must hide it (the API tests rely on this).
+    // Like Google's resale-only clusters, which often rank first: no official
+    // seller anywhere, so search must hide it and must not spend the prefetch
+    // budget on it (the API tests rely on both).
     const resale = `demo:${base.toLowerCase()} resale lot`;
-    clusters.push({ key: resale, ref: resale, title: `${base} Resale Lot`, imageUrl: null, teaser: null });
+    clusters.unshift({ key: resale, ref: resale, title: `${base} Resale Lot`, imageUrl: null, teaser: null });
     return { offers: [], clusters };
   },
 

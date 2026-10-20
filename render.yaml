@@ -33,11 +33,12 @@ services:
         value: "true"
       - key: COOKIE_SECURE
         value: "true"
-      # 0 = don't pre-fetch store prices during search. Each search then costs
-      # one Google Shopping request instead of three, which matters on the free
-      # plan's 100 requests/month. Store prices load when a product is opened.
+      # Fetch every store's price up front for the top result headlined by an
+      # official retailer. Opening that product would cost the same request
+      # anyway, and resale-only clusters never spend one, so a search costs
+      # 1-2 of the free plan's 100 requests/month.
       - key: SHOPPING_OFFERS_PREFETCH
-        value: "0"
+        value: "1"
       - key: JWT_SECRET
         generateValue: true
       # Paste these in the dashboard (Environment tab) — never commit them.

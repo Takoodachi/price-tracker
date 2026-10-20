@@ -71,6 +71,8 @@ describe.skipIf(!process.env.PT_TEST_DB_READY)('API', async () => {
     const eligible = first.offers.filter((o) => o.inStock !== false && o.priceCents);
     expect(first.best!.priceCents).toBe(Math.min(...eligible.map((o) => o.priceCents!)));
     // Only the top results get a full price check up front; the rest load on demand.
+    // The resale cluster ranked ahead of them didn't use up that budget.
+    expect(result.products[1]!.moreOffersAvailable).toBe(false);
     expect(result.products[3]!.moreOffersAvailable).toBe(true);
     productId = first.id;
   });
